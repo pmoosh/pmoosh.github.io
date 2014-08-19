@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog - Yaba]]></title>
-  <link href="http://pmoosh.github.io/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Command Line | My Octopress Blog - Yaba]]></title>
+  <link href="http://pmoosh.github.io/blog/categories/command-line/atom.xml" rel="self"/>
   <link href="http://pmoosh.github.io/"/>
   <updated>2014-08-18T22:45:01-07:00</updated>
   <id>http://pmoosh.github.io/</id>
@@ -23,17 +23,15 @@ They provide copying and pasting to the pasteboard (the Clipboard) from the comm
 
 <p>So you can pipe your massive json file onto the pastboard with a simple command:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cat huge.json | pbcopy</span></code></pre></td></tr></table></div></figure>
-
+<pre><code>cat huge.json | pbcopy
+</code></pre>
 
 <p>Now you have it in the pasteboard (clipboard) and paste it in your favorite json lint site - like <a href="http://jsonlint.com">JsonLint</a> or <a href="http://www.freeformatter.com/json-validator.html">FREEFORMATTER.COM</a>.</p>
 
-<p>One way I use pbpaste is when copying keys created on websites. So I after copied the key to the pasteboard I will run the command:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>pbpaste &gt; keyfile.pem</span></code></pre></td></tr></table></div></figure>
-
+<p>One way I use pbpaste is when copying keys created on websites. So I after copied the key to the pasteboard I will run the command:
+<code>
+pbpaste &gt; keyfile.pem
+</code></p>
 
 <p>That&rsquo;s it.</p>
 ]]></content>
