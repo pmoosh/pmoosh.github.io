@@ -10,7 +10,7 @@ This is one of the blog posts that is mostly for I am still digging into chef an
 
 Today I had to work with encrypted data bags. They are easy to create with knife and a chef server:
 ```
-knife data bag from file DATA_BAG_NAME /path/to/DATA_BAG_ITEM.json -z --secret-file /path/to/encrypted_data_bag_secret
+knife data bag from file DATA_BAG_NAME /path/to/DATA_BAG_ITEM.json --secret-file /path/to/encrypted_data_bag_secret
 ```
 
 But since I needed them locally on my system - I am using chef solo with vagrant - I wanted to download them again. So here is how I got it done. There might other better ways....
