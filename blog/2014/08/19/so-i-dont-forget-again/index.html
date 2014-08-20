@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Mac Osx - My Octopress Blog - Yaba</title>
+  <title>So I Don't Forget Again - My Octopress Blog - Yaba</title>
   <meta name="author" content="Peter Mooshammer">
 
   
-  <meta name="description" content="Category: mac osx">
+  <meta name="description" content="This is one of the blog posts that is mostly for I am still digging into chef and all its details. There are many blogs out there, however chef &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://pmoosh.github.io/blog/categories/mac-osx">
+  <link rel="canonical" href="http://pmoosh.github.io/blog/2014/08/19/so-i-dont-forget-again">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="My Octopress Blog - Yaba" type="application/atom+xml">
@@ -65,35 +65,84 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Mac Osx</h1>
+    
+      <h1 class="entry-title">So I Don't Forget Again</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-19T23:30:56-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>11:30 pm</span></time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>This is one of the blog posts that is mostly for I am still digging into chef and all its details. There are many blogs out there, however chef develops so rapidly that many of the blogs are outdated. I am sure this will also happen to this blog entry&hellip;.</p>
 
-  
-  <h2>2014</h2>
+<p>Today I had to work with encrypted data bags. They are easy to create with knife and a chef server:</p>
 
-<article>
-  
-<h1><a href="/blog/2014/08/18/mac-osx-pbcopy-and-pbpaste/">Mac OSX - Pbcopy and Pbpaste</a></h1>
-<time datetime="2014-08-18T18:06:45-07:00" pubdate><span class='month'>Aug</span> <span class='day'>18</span> <span class='year'>2014</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/command-line/'>command line</a>, <a class='category' href='/blog/categories/mac-osx/'>mac osx</a></span>
-</footer>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>knife data bag from file DATA_BAG_NAME /path/to/DATA_BAG_ITEM.json -z --secret-file /path/to/encrypted_data_bag_secret</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
-</article>
+<p>But since I needed them locally on my system - I am using chef solo with vagrant - I wanted to download them again. So here is how I got it done. There might other better ways&hellip;.</p>
+
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>knife data bag show DATA_BAG_NAME --format json DATA_BAG_ITEM &gt; /path/to_encrypted/DATA_BAG_ITEM.json</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Peter Mooshammer</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-08-19T23:30:56-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>11:30 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/chef/'>chef</a>, <a class='category' href='/blog/categories/data-bags/'>data bags</a>, <a class='category' href='/blog/categories/knife/'>knife</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://pmoosh.github.io/blog/2014/08/19/so-i-dont-forget-again/" data-via="pmoosh" data-counturl="http://pmoosh.github.io/blog/2014/08/19/so-i-dont-forget-again/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/08/18/mac-osx-pbcopy-and-pbpaste/" title="Previous Post: Mac OSX - pbcopy and pbpaste">&laquo; Mac OSX - pbcopy and pbpaste</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>
@@ -101,6 +150,10 @@
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>Peter Mooshammer</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     

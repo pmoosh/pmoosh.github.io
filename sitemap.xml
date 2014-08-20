@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://pmoosh.github.io/blog/2014/08/19/so-i-dont-forget-again/</loc>
+    <lastmod>2014-08-19T23:30:56-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://pmoosh.github.io/blog/2014/08/18/mac-osx-pbcopy-and-pbpaste/</loc>
     <lastmod>2014-08-18T18:06:45-07:00</lastmod>
     <priority>0.8</priority>
@@ -10,17 +16,31 @@
   
   
   <url>
-    <loc>http://pmoosh.github.io/blog/archives/</loc>
-    <lastmod>2014-08-19T09:02:15-07:00</lastmod>
+    <loc>http://pmoosh.github.io/about/about.html</loc>
+    <lastmod>2014-08-19T23:49:53-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://pmoosh.github.io/</loc>
-    <lastmod>2014-08-19T09:02:15-07:00</lastmod>
+    <lastmod>2014-08-19T23:49:53-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://pmoosh.github.io/blog/archives/</loc>
+    <lastmod>2014-08-19T23:49:53-07:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://pmoosh.github.io/about/</loc>
+    <lastmod>2014-08-19T23:49:53-07:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   
   

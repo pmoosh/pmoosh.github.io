@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog - Yaba]]></title>
   <link href="http://pmoosh.github.io/atom.xml" rel="self"/>
   <link href="http://pmoosh.github.io/"/>
-  <updated>2014-08-19T09:02:15-07:00</updated>
+  <updated>2014-08-19T23:49:53-07:00</updated>
   <id>http://pmoosh.github.io/</id>
   <author>
     <name><![CDATA[Peter Mooshammer]]></name>
@@ -12,6 +12,27 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[So I Don't Forget Again]]></title>
+    <link href="http://pmoosh.github.io/blog/2014/08/19/so-i-dont-forget-again/"/>
+    <updated>2014-08-19T23:30:56-07:00</updated>
+    <id>http://pmoosh.github.io/blog/2014/08/19/so-i-dont-forget-again</id>
+    <content type="html"><![CDATA[<p>This is one of the blog posts that is mostly for I am still digging into chef and all its details. There are many blogs out there, however chef develops so rapidly that many of the blogs are outdated. I am sure this will also happen to this blog entry&hellip;.</p>
+
+<p>Today I had to work with encrypted data bags. They are easy to create with knife and a chef server:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>knife data bag from file DATA_BAG_NAME /path/to/DATA_BAG_ITEM.json -z --secret-file /path/to/encrypted_data_bag_secret</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But since I needed them locally on my system - I am using chef solo with vagrant - I wanted to download them again. So here is how I got it done. There might other better ways&hellip;.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>knife data bag show DATA_BAG_NAME --format json DATA_BAG_ITEM &gt; /path/to_encrypted/DATA_BAG_ITEM.json</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mac OSX - Pbcopy and Pbpaste]]></title>

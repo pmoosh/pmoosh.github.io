@@ -9,8 +9,7 @@
   <meta name="author" content="Peter Mooshammer">
 
   
-  <meta name="description" content="One of the small but helpful tools that Mac OS X provides are pbcopy and pbpaste.
-They provide copying and pasting to the pasteboard (the Clipboard) &hellip;">
+  <meta name="description" content="This is one of the blog posts that is mostly for I am still digging into chef and all its details. There are many blogs out there, however chef &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -59,6 +58,7 @@ They provide copying and pasting to the pasteboard (the Clipboard) &hellip;">
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About me</a></li>
 </ul>
 
 </nav>
@@ -66,6 +66,47 @@ They provide copying and pasting to the pasteboard (the Clipboard) &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/19/so-i-dont-forget-again/">So I Don't Forget Again</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-19T23:30:56-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>11:30 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This is one of the blog posts that is mostly for I am still digging into chef and all its details. There are many blogs out there, however chef develops so rapidly that many of the blogs are outdated. I am sure this will also happen to this blog entry&hellip;.</p>
+
+<p>Today I had to work with encrypted data bags. They are easy to create with knife and a chef server:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>knife data bag from file DATA_BAG_NAME /path/to/DATA_BAG_ITEM.json -z --secret-file /path/to/encrypted_data_bag_secret</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But since I needed them locally on my system - I am using chef solo with vagrant - I wanted to download them again. So here is how I got it done. There might other better ways&hellip;.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>knife data bag show DATA_BAG_NAME --format json DATA_BAG_ITEM &gt; /path/to_encrypted/DATA_BAG_ITEM.json</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -122,8 +163,16 @@ They provide copying and pasting to the pasteboard (the Clipboard) from the comm
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>Peter Mooshammer</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/08/19/so-i-dont-forget-again/">So I Don't Forget Again</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/08/18/mac-osx-pbcopy-and-pbpaste/">Mac OSX - Pbcopy and Pbpaste</a>
@@ -165,7 +214,6 @@ They provide copying and pasting to the pasteboard (the Clipboard) from the comm
   </script>
   <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
-
 
 
 <section class="googleplus">
