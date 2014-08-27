@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Knife | My Octopress Blog - Yaba]]></title>
+  <title><![CDATA[Category: Knife | Yaba - Yet another blog attempt]]></title>
   <link href="http://pmoosh.github.io/blog/categories/knife/atom.xml" rel="self"/>
   <link href="http://pmoosh.github.io/"/>
-  <updated>2014-08-20T15:33:05-07:00</updated>
+  <updated>2014-08-27T00:21:25-07:00</updated>
   <id>http://pmoosh.github.io/</id>
   <author>
     <name><![CDATA[Peter Mooshammer]]></name>
