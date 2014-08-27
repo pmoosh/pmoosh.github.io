@@ -3,11 +3,11 @@
 # ----------------------- #
 
 url: http://pmoosh.github.io
-title: My Octopress Blog - Yaba
-subtitle: A blogging framework for hackers.
+title: Yaba - Yet another blog attempt
+subtitle: How did that work again?
 author: Peter Mooshammer
 simple_search: https://www.google.com/search
-description: Simple blog for to keep track of things
+description: Simple blog to keep track of things
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
