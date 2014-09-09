@@ -1,0 +1,36 @@
+<p>We had to configure django behind a AWS load balancer and that would mean that whenever the IP of the load balancer changes we would to change the ALLOWED_HOSTS
+in the settings section. Note: This is for the ELB health check. Some on the web suggest to circumvent the ALLOWED_HOSTS by simple allowing any host,
+which we didn&rsquo;t want to do. So here is the solution
+I found on <a href="http://dryan.me/articles/elb-django-allowed-hosts/">Daniel Ryan&rsquo;s</a> site:</p>
+
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># Hosts/domain names that are valid for this site; required if DEBUG is False
+</span><span class='line'># See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
+</span><span class='line'>ALLOWED_HOSTS = [
+</span><span class='line'>    'WHATEVER YOU NEED'
+</span><span class='line'>]
+</span><span class='line'> 
+</span><span class='line'>import requests
+</span><span class='line'>EC2_PRIVATE_IP  =   None
+</span><span class='line'>try:
+</span><span class='line'>    EC2_PRIVATE_IP  =   requests.get('http://169.254.169.254/latest/meta-data/local-ipv4', timeout = 0.01).text
+</span><span class='line'>except requests.exceptions.RequestException:
+</span><span class='line'>    pass
+</span><span class='line'> 
+</span><span class='line'>if EC2_PRIVATE_IP:
+</span><span class='line'>    ALLOWED_HOSTS.append(EC2_PRIVATE_IP)</span></code></pre></td></tr></table></div></figure></notextile></div>
+
