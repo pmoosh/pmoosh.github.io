@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Docker | Yaba - Yet another blog attempt]]></title>
+  <link href="http://pmoosh.github.io/blog/categories/docker/atom.xml" rel="self"/>
+  <link href="http://pmoosh.github.io/"/>
+  <updated>2014-12-25T00:22:25-08:00</updated>
+  <id>http://pmoosh.github.io/</id>
+  <author>
+    <name><![CDATA[Peter Mooshammer]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Basics Operation on a Private Docker Registry]]></title>
+    <link href="http://pmoosh.github.io/blog/2014/12/24/basics-operation-on-a-private-docker-registry/"/>
+    <updated>2014-12-24T23:51:58-08:00</updated>
+    <id>http://pmoosh.github.io/blog/2014/12/24/basics-operation-on-a-private-docker-registry</id>
+    <content type="html"><![CDATA[<h2>Basic Operations on a private Docker registry</h2>
+
+<p>Getting started with a private Docker registry means a lot of searching on Google. Unfortunately, I couldn&rsquo;t find a single site that would cover the basic operations such as search for images or tags. So here is a little write up, that I covers some of it.</p>
+
+<h3>Docker Login</h3>
+
+<p>In order to do push and pull operations on the private registry a user has to be authenticated (via nginx proxy) and logged in.</p>
+
+<pre><code>docker login docker.example.com
+</code></pre>
+
+<p>This will generate a <code>.dockercfg</code> file on the system where the login will be stored.</p>
+
+<h3>Search the private index</h3>
+
+<p>There are two methods for search available:</p>
+
+<h4>Docker Search</h4>
+
+<p>Docker search allows for some simple searches in the private index. For example:</p>
+
+<pre><code>docker search docker.example.com/ubuntu
+</code></pre>
+
+<p>However, if a nginx proxy sits in front of private Registry for authentication, you need to add user and password in front of the URL (Note: Unfortunately <code>docker search</code> will not take the login credentials as stored in the <code>.dockercfg</code> file):
+&#8220;`
+docker search user:password@docker.example.com/ubuntu</p>
+
+<p>NAME             DESCRIPTION   STARS     OFFICIAL   AUTOMATED
+library/ubuntu                 0
+<code>``
+This will give you some information about the ubuntu repositories stored in the private registry, if one exists.</code>docker search<code>also allows for partial searches, so such as using</code>ubu<code>instead of</code>ubuntu` as search terms.</p>
+
+<h4><a href="https://docs.docker.com/reference/api/registry_api/">Docker Registry API</a></h4>
+
+<p>A less elegant but much more flexible way to search the registry is the use of the Docker Registry API</p>
+
+<pre><code>curl -X GET https://user:passwd@docker.example.com/v1/search?q=ubuntu
+</code></pre>
+
+<p>or a more generic search:</p>
+
+<pre><code>curl -s -X GET https://user:passwd@ocker.example.com/v1/search
+</code></pre>
+
+<p>generates json lists, which can be further formated with a tool like <a href="http://stedolan.github.io/jq/">jq</a>
+For example the following command line:
+<code>
+curl -s -X GET https://user:passwd@docker.example.com/v1/search | jq '.results[].name'
+</code>
+would produce an output like this:</p>
+
+<pre><code>"library/nginx"
+"library/aws_cli"
+"library/redis"
+"library/debian"
+"library/busybox"
+"library/ubuntu"
+"library/commit_test"
+"library/logstash"
+"library/logstash-forwarder"
+"library/base"
+</code></pre>
+
+<h3>Delete Operations</h3>
+
+<p>Delete operations are only available via the Docker Registry API. Note there is easy way to remove a image from a private registry, something that could help to recude storage space. The reason for is that layers of one image may rely layers from other images.</p>
+
+<h4>Delete a repository tag</h4>
+
+<pre><code>curl -X DELETE https://user:passwd@docker.example.com/v1/repositories/library/ubuntu/12.04
+</code></pre>
+
+<h4>Delete a complete repository</h4>
+
+<p>(using the ubuntu repo as example)
+<code>
+curl -X DELETE https://user:passwd@docker.example.com/v1/repositories/library/ubuntu/
+</code></p>
+
+<h3>Checking repository tags</h3>
+
+<p>Here is an example (using the ubuntu repo) of checking the exixting tags in a repository:
+<code>
+curl -X GET https://user:passwd@docker.example.com/v1/repositories/library/ubuntu/tags
+</code>
+Example output:
+<code>
+{"12.04": "58c0a77963eaca09a68febbda32683812f3ff3615cc1ffa305cee67aa591fe26",
+"14.04": "86ce37374f40e95cfe8af7327c34ea9919ef216ea965377565fcfad3c378a2c3"}
+</code></p>
+
+<h3>Pushing Container images to the private Registry</h3>
+
+<h4>Tagging a Container Image</h4>
+
+<p>In order to push a container image to a private Docker Registry the image needs to tagged accordingly. This can be done when the container is built.</p>
+
+<pre><code>docker build --rm -t docker.example.com/logstash-fwd .
+</code></pre>
+
+<p>This will automatically tag the images with the <code>latest</code> tag. To mark the images with a more specific version tag run the following command:
+<code>
+docker tag docker.example.com/logstash-fwd docker.example.com/logstash-fwd:0.0.1
+</code>
+After these two operations the image will have two tags <code>0.0.1</code> and <code>latest</code>. The <code>latest</code> tag is implicit if you pull the image with the registry name only.</p>
+
+<h4>Pushing the Container Image to the Registry</h4>
+
+<p>After the image is tagged correctly it can be pushed to the registry with command:
+<code>
+docker push docker.example.com/logstash-fwd:0.0.1 .
+</code>
+Note: For this operation you have to be <a href="#Docker%20Login">logged in</a> into the registry. The docker-client will not throw an error if you are not.</p>
+]]></content>
+  </entry>
+  
+</feed>

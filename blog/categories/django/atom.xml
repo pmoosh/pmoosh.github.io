@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Django | Yaba - Yet another blog attempt]]></title>
+  <link href="http://pmoosh.github.io/blog/categories/django/atom.xml" rel="self"/>
+  <link href="http://pmoosh.github.io/"/>
+  <updated>2014-12-25T00:22:25-08:00</updated>
+  <id>http://pmoosh.github.io/</id>
+  <author>
+    <name><![CDATA[Peter Mooshammer]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Django Behind an Amazon Load Balancer]]></title>
+    <link href="http://pmoosh.github.io/blog/2014/09/08/django-behind-an-amazon-load-balancer/"/>
+    <updated>2014-09-08T16:58:20-07:00</updated>
+    <id>http://pmoosh.github.io/blog/2014/09/08/django-behind-an-amazon-load-balancer</id>
+    <content type="html"><![CDATA[<p>We had to configure django behind a AWS load balancer and that would mean that whenever the IP of the load balancer changes we would to change the ALLOWED_HOSTS
+in the settings section. Note: This is for the ELB health check. Some on the web suggest to circumvent the ALLOWED_HOSTS by simple allowing any host,
+which we didn&rsquo;t want to do. So here is the solution
+I found on <a href="http://dryan.me/articles/elb-django-allowed-hosts/">Daniel Ryan&rsquo;s</a> site:</p>
+
+<pre><code># Hosts/domain names that are valid for this site; required if DEBUG is False
+# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
+ALLOWED_HOSTS = [
+    'WHATEVER YOU NEED'
+]
+
+import requests
+EC2_PRIVATE_IP  =   None
+try:
+    EC2_PRIVATE_IP  =   requests.get('http://169.254.169.254/latest/meta-data/local-ipv4', timeout = 0.01).text
+except requests.exceptions.RequestException:
+    pass
+
+if EC2_PRIVATE_IP:
+    ALLOWED_HOSTS.append(EC2_PRIVATE_IP)
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

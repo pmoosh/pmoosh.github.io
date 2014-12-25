@@ -3,8 +3,14 @@
   
   
   <url>
+    <loc>http://pmoosh.github.io/blog/2014/12/24/basics-operation-on-a-private-docker-registry/</loc>
+    <lastmod>2014-12-24T23:51:58-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://pmoosh.github.io/blog/2014/09/08/django-behind-an-amazon-load-balancer/</loc>
-    <lastmod>2014-09-08T00:00:00-07:00</lastmod>
+    <lastmod>2014-09-08T16:58:20-07:00</lastmod>
     <priority>0.8</priority>
   </url>
   
@@ -23,28 +29,28 @@
   
   <url>
     <loc>http://pmoosh.github.io/about/about.html</loc>
-    <lastmod>2014-09-08T17:32:22-07:00</lastmod>
+    <lastmod>2014-12-25T00:22:25-08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://pmoosh.github.io/</loc>
-    <lastmod>2014-09-08T17:32:22-07:00</lastmod>
+    <lastmod>2014-12-25T00:22:25-08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://pmoosh.github.io/blog/archives/</loc>
-    <lastmod>2014-09-08T17:32:22-07:00</lastmod>
+    <lastmod>2014-12-25T00:22:25-08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://pmoosh.github.io/about/</loc>
-    <lastmod>2014-09-08T17:32:22-07:00</lastmod>
+    <lastmod>2014-12-25T00:22:25-08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
