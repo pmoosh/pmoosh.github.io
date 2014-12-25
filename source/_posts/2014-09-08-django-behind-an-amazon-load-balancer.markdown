@@ -3,7 +3,9 @@ layout: post
 title: "Django behind an Amazon Load Balancer"
 date: 2014-09-08 16:58:20 -0700
 comments: true
-categories:[AWS, django] 
+categories:
+- AWS
+- Django
 ---
 
 We had to configure django behind a AWS load balancer and that would mean that whenever the IP of the load balancer changes we would to change the ALLOWED_HOSTS
