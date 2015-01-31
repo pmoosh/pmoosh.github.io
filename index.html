@@ -9,7 +9,7 @@
   <meta name="author" content="Peter Mooshammer">
 
   
-  <meta name="description" content="Basic Operations on a private Docker registry Getting started with a private Docker registry means a lot of searching on Google. Unfortunately, I &hellip;">
+  <meta name="description" content="Write a &lsquo;Hello World&rsquo; program with Ansible Lately I work quite a bit with Ansible. There is a lot to like about it. Creating VM on AWS is &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,103 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/31/write-hello-world-with-ansible/">Write 'Hello World' With Ansible</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-31T11:02:45-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>11:02 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Write a &lsquo;Hello World&rsquo; program with Ansible</h2>
+
+<p>Lately I work quite a bit with Ansible. There is a lot to like about it. Creating VM on AWS is particularly easy with Ansible. I was working on a playbook that had a dependency on the Ansible version itself so I toyed around with <code>omit</code>.</p>
+
+<p>My playbook contained the following piece of code:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>....
+</span><span class='line'>type: "pd-ssd"
+</span><span class='line'>...</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So it basically should use the value <code>pd-ssd</code> if the ansible version is 1.9 or greater or omit the parameter completely as it not supported in earlier Ansible versions (The parameter is used for the gce_pd module)</p>
+
+<p>I did test <code>omit</code> in a smaller test playbook and here is the extact:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- name: Hello World
+</span><span class='line'>  hosts: local
+</span><span class='line'>  gather_facts: no
+</span><span class='line'>  connection: local
+</span><span class='line'>  vars:
+</span><span class='line'>    disp: ""
+</span><span class='line'>
+</span><span class='line'>  tasks:
+</span><span class='line'>  - name: check
+</span><span class='line'>    debug:
+</span><span class='line'>      msg: ""</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So lets run this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$  ansible-playbook -i hosts hello.yml
+</span><span class='line'>
+</span><span class='line'>PLAY [Hello World] ************************************************************
+</span><span class='line'>
+</span><span class='line'>TASK: [check exists] ******************************************
+</span><span class='line'>ok: [localhost] =&gt; {
+</span><span class='line'>  "msg": "Hello world!"
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>PLAY RECAP ********************************************************************
+</span><span class='line'>localhost                  : ok=1    changed=0    unreachable=0    failed=0</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Awesome</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -421,6 +518,10 @@ They provide copying and pasting to the pasteboard (the Clipboard) from the comm
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/01/31/write-hello-world-with-ansible/">Write 'Hello World' With Ansible</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/12/24/basics-operation-on-a-private-docker-registry/">Basics Operation on a Private Docker Registry</a>
       </li>
     
@@ -491,7 +592,7 @@ They provide copying and pasting to the pasteboard (the Clipboard) from the comm
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Peter Mooshammer -
+  Copyright &copy; 2015 - Peter Mooshammer -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

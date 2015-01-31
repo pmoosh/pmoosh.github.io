@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ansible | Yaba - Yet another blog attempt]]></title>
+  <link href="http://pmoosh.github.io/blog/categories/ansible/atom.xml" rel="self"/>
+  <link href="http://pmoosh.github.io/"/>
+  <updated>2015-01-31T11:26:11-08:00</updated>
+  <id>http://pmoosh.github.io/</id>
+  <author>
+    <name><![CDATA[Peter Mooshammer]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Write 'Hello World' With Ansible]]></title>
+    <link href="http://pmoosh.github.io/blog/2015/01/31/write-hello-world-with-ansible/"/>
+    <updated>2015-01-31T11:02:45-08:00</updated>
+    <id>http://pmoosh.github.io/blog/2015/01/31/write-hello-world-with-ansible</id>
+    <content type="html"><![CDATA[<h2>Write a &lsquo;Hello World&rsquo; program with Ansible</h2>
+
+<p>Lately I work quite a bit with Ansible. There is a lot to like about it. Creating VM on AWS is particularly easy with Ansible. I was working on a playbook that had a dependency on the Ansible version itself so I toyed around with <code>omit</code>.</p>
+
+<p>My playbook contained the following piece of code:</p>
+
+<pre><code>....
+type: "pd-ssd"
+...
+</code></pre>
+
+<p>So it basically should use the value <code>pd-ssd</code> if the ansible version is 1.9 or greater or omit the parameter completely as it not supported in earlier Ansible versions (The parameter is used for the gce_pd module)</p>
+
+<p>I did test <code>omit</code> in a smaller test playbook and here is the extact:
+&#8220;`
+- name: Hello World
+  hosts: local
+  gather_facts: no
+  connection: local
+  vars:
+    disp: &ldquo;&rdquo;</p>
+
+<p>  tasks:
+  - name: check
+    debug:
+      msg: &ldquo;&rdquo;
+&#8220;`</p>
+
+<p>So lets run this:</p>
+
+<pre><code>$  ansible-playbook -i hosts hello.yml
+
+PLAY [Hello World] ************************************************************
+
+TASK: [check exists] ******************************************
+ok: [localhost] =&gt; {
+  "msg": "Hello world!"
+}
+
+PLAY RECAP ********************************************************************
+localhost                  : ok=1    changed=0    unreachable=0    failed=0
+</code></pre>
+
+<p>Awesome</p>
+]]></content>
+  </entry>
+  
+</feed>
