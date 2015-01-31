@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Hello World | Yaba - Yet another blog attempt]]></title>
   <link href="http://pmoosh.github.io/blog/categories/hello-world/atom.xml" rel="self"/>
   <link href="http://pmoosh.github.io/"/>
-  <updated>2015-01-31T11:26:11-08:00</updated>
+  <updated>2015-01-31T11:37:30-08:00</updated>
   <id>http://pmoosh.github.io/</id>
   <author>
     <name><![CDATA[Peter Mooshammer]]></name>
@@ -24,26 +24,27 @@
 
 <p>My playbook contained the following piece of code:</p>
 
-<pre><code>....
-type: "pd-ssd"
+<pre><code class="yml">....
+
+type: "{{ 'pd-ssd' if ansible_version.full | version_compare('1.9', '&gt;=') else omit }}"
 ...
 </code></pre>
 
 <p>So it basically should use the value <code>pd-ssd</code> if the ansible version is 1.9 or greater or omit the parameter completely as it not supported in earlier Ansible versions (The parameter is used for the gce_pd module)</p>
 
 <p>I did test <code>omit</code> in a smaller test playbook and here is the extact:
-&#8220;`
+&#8220;`yml
 - name: Hello World
   hosts: local
   gather_facts: no
   connection: local
   vars:
-    disp: &ldquo;&rdquo;</p>
+    disp: &ldquo;{{ xxxx | default(omit) }}&rdquo;</p>
 
 <p>  tasks:
   - name: check
     debug:
-      msg: &ldquo;&rdquo;
+      msg: &ldquo;{{ disp }}&rdquo;
 &#8220;`</p>
 
 <p>So lets run this:</p>

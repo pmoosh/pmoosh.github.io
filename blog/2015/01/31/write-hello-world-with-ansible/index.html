@@ -103,19 +103,22 @@
 
 <p>My playbook contained the following piece of code:</p>
 
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>....
-</span><span class='line'>type: "pd-ssd"
-</span><span class='line'>...</span></code></pre></td></tr></table></div></figure></notextile></div>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">....</span>
+</span><span class='line'><span class="l-Scalar-Plain"></span>
+</span><span class='line'><span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">&#39;pd-ssd&#39;</span><span class="nv"> </span><span class="s">if</span><span class="nv"> </span><span class="s">ansible_version.full</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">version_compare(&#39;1.9&#39;,</span><span class="nv"> </span><span class="s">&#39;&gt;=&#39;)</span><span class="nv"> </span><span class="s">else</span><span class="nv"> </span><span class="s">omit</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span><span class='line'><span class="nn">...</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <p>So it basically should use the value <code>pd-ssd</code> if the ansible version is 1.9 or greater or omit the parameter completely as it not supported in earlier Ansible versions (The parameter is used for the gce_pd module)</p>
 
 <p>I did test <code>omit</code> in a smaller test playbook and here is the extact:</p>
 
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -126,22 +129,23 @@
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>- name: Hello World
-</span><span class='line'>  hosts: local
-</span><span class='line'>  gather_facts: no
-</span><span class='line'>  connection: local
-</span><span class='line'>  vars:
-</span><span class='line'>    disp: ""
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Hello World</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">hosts</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">local</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">gather_facts</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">no</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">connection</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">local</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">vars</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">disp</span><span class="p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">xxxx</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(omit)</span><span class="nv"> </span><span class="s">}}&quot;</span>
 </span><span class='line'>
-</span><span class='line'>  tasks:
-</span><span class='line'>  - name: check
-</span><span class='line'>    debug:
-</span><span class='line'>      msg: ""</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span><span class='line'>  <span class="l-Scalar-Plain">tasks</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">check</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">debug</span><span class="p-Indicator">:</span>
+</span><span class='line'>      <span class="l-Scalar-Plain">msg</span><span class="p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">disp</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <p>So lets run this:</p>
 
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -152,17 +156,18 @@
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$  ansible-playbook -i hosts hello.yml
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">$  ansible-playbook -i hosts hello.yml</span>
 </span><span class='line'>
-</span><span class='line'>PLAY [Hello World] ************************************************************
+</span><span class='line'><span class="l-Scalar-Plain">PLAY [Hello World] ************************************************************</span>
 </span><span class='line'>
-</span><span class='line'>TASK: [check exists] ******************************************
-</span><span class='line'>ok: [localhost] =&gt; {
-</span><span class='line'>  "msg": "Hello world!"
-</span><span class='line'>}
+</span><span class='line'><span class="l-Scalar-Plain">TASK</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">check exists</span><span class="p-Indicator">]</span> <span class="err">******************************************</span>
+</span><span class='line'><span class="l-Scalar-Plain">ok</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">localhost</span><span class="p-Indicator">]</span> <span class="l-Scalar-Plain">=&gt; {</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">&quot;msg&quot;</span><span class="p-Indicator">:</span> <span class="s">&quot;Hello</span><span class="nv"> </span><span class="s">world!&quot;</span>
+</span><span class='line'><span class="err">}</span>
 </span><span class='line'>
-</span><span class='line'>PLAY RECAP ********************************************************************
-</span><span class='line'>localhost                  : ok=1    changed=0    unreachable=0    failed=0</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span><span class='line'><span class="l-Scalar-Plain">PLAY RECAP ********************************************************************</span>
+</span><span class='line'><span class="l-Scalar-Plain">localhost</span>                  <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ok=1    changed=0    unreachable=0    failed=0</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <p>Awesome</p>
