@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: 
-
-Sitemap: http://pmoosh.github.io/sitemap.xml 

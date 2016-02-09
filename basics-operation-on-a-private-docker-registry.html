@@ -1,0 +1,261 @@
+<html>
+  <head>
+    <meta content='Basics Operation on a private docker registry - Bits and Pieces' property='og:title' />
+    <title>Basics Operation on a private docker registry - Bits and Pieces</title>
+    <link href='/images/fav.png' rel='shortcut icon'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css' />
+<link href='/css/style.css' rel='stylesheet' type='text/css' />
+<link href='/css/syntax.css' rel='stylesheet' type='text/css' />
+<link href='/css/responsive.css' rel='stylesheet' type='text/css' />
+<!-- - -->
+<script src='/javascripts/jquery.js' type='text/javascript'></script>
+<script src='/javascripts/pd.js' type='text/javascript'></script>
+<script src='/javascripts/basics.js' type='text/javascript'></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<!-- - -->
+<meta content='width=device-width, initial-scale=1.0, user-scalable=no' name='viewport'>
+<meta content='text/html; charset=utf-8' http-equiv='content-type' />
+<meta content="http://muan.co/images/og.png" property="og:image" />
+<meta content="" property="fb:app_id" />
+
+  <meta content='http://www.mooshammer.us/basics-operation-on-a-private-docker-registry.html' property='og:url' />
+  <meta content="Getting started with a private Docker registry means a lot of searching on Google. Unfortunately, I couldn’t find a s..." property='og:description' />
+  <meta content="article" property="og:type" />
+
+<!-- - -->
+<script type='text/javascript'>
+  //<![CDATA[
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-57970385-1']);
+    _gaq.push(['_trackPageview']);
+    
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  //]]>
+</script>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=604714799556697";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+  </head>
+  <body>
+    <header>
+<a id="go-back-home" href="/"><img src="http://en.gravatar.com/userimage/8251015/a52519776e002a849cef92b07eeee86d.png" ></a>
+<p>Bits and Pieces</p>
+</header>
+
+    <div id='container'>
+      <div class="block">
+  
+    <a target="_top" class="main" href="/about">About</a>
+  
+    <a target="_blank" class="main" href="https://plus.google.com/u/0/+PeterMooshammer">G+</a>
+  
+    <a target="_blank" class="main" href="https://github.com/pmoosh">GitHub</a>
+  
+    <a target="_blank" class="main" href="https://www.twitter.com/pmoosh">Twitter</a>
+  
+    <a target="_blank" class="main" href="http://www.meetup.com/gdg-silicon-valley/">Google Developer Group Silicon Valley Meetup</a>
+  
+    <a target="_blank" class="main" href="http://www.meetup.com/The-Bay-Area-Chef-User-Group/">The Bay Area Chef User Group</a>
+  
+    <a target="_blank" class="main" href="http://www.meetup.com/Bay-Area-Infracoders/">Bay Area Infracoders</a>
+  
+    <a target="_blank" class="main" href="http://www.meetup.com/Docker-Palo-Alto/">Docker Palo Alto</a>
+  
+</div>
+      <section class="paging">
+  
+    <div class="left">
+      <a href="/django-behind-an-amazon-load-balancer.html">
+        ‹
+      </a>
+    </div>
+  
+  
+    <div class="right">
+      <a href="/write-hello-world-with-ansible.html">
+        ›
+      </a>
+    </div>
+  
+</section>
+      <div class="content">
+        <section class='post'>
+          <h1 class="upcase">
+            <div class='date'>24 Dec 2014</div>
+            Basics Operation on a private docker registry
+          </h1>
+          <p>Getting started with a private Docker registry means a lot of searching on Google. Unfortunately, I couldn’t find a single site that would cover the basic operations such as search for images or tags. So here is a little write up, that I covers some of it.</p>
+
+<h3 id="docker-login">Docker Login</h3>
+<p>In order to do push and pull operations on the private registry a user has to be authenticated (via nginx proxy) and logged in.<br />
+<code class="highlighter-rouge">
+docker login docker.example.com
+</code><br />
+This will generate a <code class="highlighter-rouge">.dockercfg</code> file on the system where the login will be stored.</p>
+
+<h3 id="search-a-private-index">Search a private index</h3>
+<p>There are two methods for search available:</p>
+
+<h4 id="docker-search">Docker Search</h4>
+<p>Docker search allows for some simple searches in the private index. For example:<br />
+<code class="highlighter-rouge">
+docker search docker.example.com/ubuntu
+</code><br />
+However, if a nginx proxy sits in front of private Registry for authentication, you need to add user and password in front of the URL (Note: Unfortunately <code class="highlighter-rouge">docker search</code> will not take the login credentials as stored in the <code class="highlighter-rouge">.dockercfg</code> file):<br />
+```
+docker search user:password@docker.example.com/ubuntu</p>
+
+<p>NAME             DESCRIPTION   STARS     OFFICIAL   AUTOMATED
+library/ubuntu                 0
+```<br />
+This will give you some information about the ubuntu repositories stored in the private registry, if one exists. <code class="highlighter-rouge">docker search</code> also allows for partial searches, so such as using <code class="highlighter-rouge">ubu</code> instead of <code class="highlighter-rouge">ubuntu</code> as search terms.</p>
+
+<h4 id="docker-registry-apihttpsdocsdockercomreferenceapiregistryapi"><a href="https://docs.docker.com/reference/api/registry_api/">Docker Registry API</a></h4>
+<p>A less elegant but much more flexible way to search the registry is the use of the Docker Registry API.<br />
+<code class="highlighter-rouge">
+curl -X GET https://user:passwd@docker.example.com/v1/search?q=ubuntu
+</code><br />
+or a more generic search:<br />
+<code class="highlighter-rouge">
+curl -s -X GET https://user:passwd@ocker.example.com/v1/search
+</code><br />
+generates json lists, which can be further formated with a tool like <a href="http://stedolan.github.io/jq/">jq</a>
+For example the following command line:<br />
+<code class="highlighter-rouge">
+curl -s -X GET https://user:passwd@docker.example.com/v1/search | jq '.results[].name'
+</code><br />
+would produce an output like this:<br />
+<code class="highlighter-rouge">
+"library/nginx"
+"library/aws_cli"
+"library/redis"
+"library/debian"
+"library/busybox"
+"library/ubuntu"
+"library/commit_test"
+"library/logstash"
+"library/logstash-forwarder"
+"library/base"
+</code></p>
+
+<h3 id="delete-operations">Delete Operations</h3>
+<p>Delete operations are only available via the Docker Registry API. Note there is easy way to remove a image from a private registry, something that could help to reduce storage space. The reason for is that layers of one image may rely layers from other images.</p>
+
+<h4 id="delete-a-repository-tag">Delete a repository tag</h4>
+<p><code class="highlighter-rouge">
+curl -X DELETE https://user:passwd@docker.example.com/v1/repositories/library/ubuntu/12.04
+</code></p>
+
+<h4 id="delete-a-complete-repository">Delete a complete repository</h4>
+<p>(using the ubuntu repo as example)
+<code class="highlighter-rouge">
+curl -X DELETE https://user:passwd@docker.example.com/v1/repositories/library/ubuntu/
+</code>
+### Checking repository tags
+Here is an example (using the ubuntu repo) of checking the exixting tags in a repository:<br />
+<code class="highlighter-rouge">
+curl -X GET https://user:passwd@docker.example.com/v1/repositories/library/ubuntu/tags
+</code><br />
+Example output:<br />
+<code class="highlighter-rouge"><span class="w">
+</span><span class="p">{</span><span class="nt">"12.04"</span><span class="p">:</span><span class="w"> </span><span class="s2">"58c0a77963eaca09a68febbda32683812f3ff3615cc1ffa305cee67aa591fe26"</span><span class="p">,</span><span class="w">
+</span><span class="nt">"14.04"</span><span class="p">:</span><span class="w"> </span><span class="s2">"86ce37374f40e95cfe8af7327c34ea9919ef216ea965377565fcfad3c378a2c3"</span><span class="p">}</span><span class="w">
+</span></code></p>
+
+<h3 id="pushing-container-images-to-the-private-registry">Pushing Container images to the private Registry</h3>
+
+<h4 id="tagging-a-container-image">Tagging a Container Image</h4>
+<p>In order to push a container image to a private Docker Registry the image needs to tagged accordingly. This can be done when the container is built.<br />
+<code class="highlighter-rouge">
+docker build --rm -t docker.example.com/logstash-fwd .
+</code><br />
+This will automatically tag the images with the <code class="highlighter-rouge">latest</code> tag. To mark the images with a more specific version tag run the following command:<br />
+<code class="highlighter-rouge">
+docker tag docker.example.com/logstash-fwd docker.example.com/logstash-fwd:0.0.1
+</code><br />
+After these two operations the image will have two tags <code class="highlighter-rouge">0.0.1</code> and <code class="highlighter-rouge">latest</code>. The <code class="highlighter-rouge">latest</code> tag is implicit if you pull the image with the registry name only.</p>
+
+<h4 id="pushing-the-container-image-to-the-registry">Pushing the Container Image to the Registry</h4>
+<p>After the image is tagged correctly it can be pushed to the registry with command:<br />
+<code class="highlighter-rouge">
+docker push docker.example.com/logstash-fwd:0.0.1 .
+</code><br />
+Note: For this operation you have to be <a href="#Docker Login">logged in</a> into the registry. The docker-client will not throw an error if you are not.</p>
+
+          <br />
+<p>
+  Til next time,<br/>
+  E.E
+  <span class="muted">at 23:51</span>
+</p>
+
+
+        </section>
+      </div>
+      
+        <div class="block">
+
+  <div class="button">
+    <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  </div>
+
+    <div class="button spaced">
+      <div class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false" data-font="arial" data-action="like"></div>
+    </div>
+
+</div>
+
+      
+
+      
+        <div class="block">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      var disqus_shortname = "Petzi_baer"; 
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+      
+      <div class="block">
+  
+    <a target="_top" class="main" href="/about">About</a>
+  
+    <a target="_blank" class="main" href="https://plus.google.com/u/0/+PeterMooshammer">G+</a>
+  
+    <a target="_blank" class="main" href="https://github.com/pmoosh">GitHub</a>
+  
+    <a target="_blank" class="main" href="https://www.twitter.com/pmoosh">Twitter</a>
+  
+    <a target="_blank" class="main" href="http://www.meetup.com/gdg-silicon-valley/">Google Developer Group Silicon Valley Meetup</a>
+  
+    <a target="_blank" class="main" href="http://www.meetup.com/The-Bay-Area-Chef-User-Group/">The Bay Area Chef User Group</a>
+  
+    <a target="_blank" class="main" href="http://www.meetup.com/Bay-Area-Infracoders/">Bay Area Infracoders</a>
+  
+    <a target="_blank" class="main" href="http://www.meetup.com/Docker-Palo-Alto/">Docker Palo Alto</a>
+  
+</div>
+    </div>
+    <footer>
+  <a href="http://github.com/muan/scribble" class="muted">built with Octopress using Scribble theme</a>
+  <br />
+  <br />
+  <img src="/images/scribble2.png" alt="scribble" /> 
+</footer>
+  </body>
+</html>

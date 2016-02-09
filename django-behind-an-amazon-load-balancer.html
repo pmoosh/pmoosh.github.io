@@ -1,0 +1,185 @@
+<html>
+  <head>
+    <meta content='Django behind an Amazon Load Balancer - Bits and Pieces' property='og:title' />
+    <title>Django behind an Amazon Load Balancer - Bits and Pieces</title>
+    <link href='/images/fav.png' rel='shortcut icon'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css' />
+<link href='/css/style.css' rel='stylesheet' type='text/css' />
+<link href='/css/syntax.css' rel='stylesheet' type='text/css' />
+<link href='/css/responsive.css' rel='stylesheet' type='text/css' />
+<!-- - -->
+<script src='/javascripts/jquery.js' type='text/javascript'></script>
+<script src='/javascripts/pd.js' type='text/javascript'></script>
+<script src='/javascripts/basics.js' type='text/javascript'></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<!-- - -->
+<meta content='width=device-width, initial-scale=1.0, user-scalable=no' name='viewport'>
+<meta content='text/html; charset=utf-8' http-equiv='content-type' />
+<meta content="http://muan.co/images/og.png" property="og:image" />
+<meta content="" property="fb:app_id" />
+
+  <meta content='http://www.mooshammer.us/django-behind-an-amazon-load-balancer.html' property='og:url' />
+  <meta content="We had to configure django behind a AWS load balancer and that would mean that whenever the IP of the load balancer c..." property='og:description' />
+  <meta content="article" property="og:type" />
+
+<!-- - -->
+<script type='text/javascript'>
+  //<![CDATA[
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-57970385-1']);
+    _gaq.push(['_trackPageview']);
+    
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  //]]>
+</script>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=604714799556697";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+  </head>
+  <body>
+    <header>
+<a id="go-back-home" href="/"><img src="http://en.gravatar.com/userimage/8251015/a52519776e002a849cef92b07eeee86d.png" ></a>
+<p>Bits and Pieces</p>
+</header>
+
+    <div id='container'>
+      <div class="block">
+  
+    <a target="_top" class="main" href="/about">About</a>
+  
+    <a target="_blank" class="main" href="https://plus.google.com/u/0/+PeterMooshammer">G+</a>
+  
+    <a target="_blank" class="main" href="https://github.com/pmoosh">GitHub</a>
+  
+    <a target="_blank" class="main" href="https://www.twitter.com/pmoosh">Twitter</a>
+  
+    <a target="_blank" class="main" href="http://www.meetup.com/gdg-silicon-valley/">Google Developer Group Silicon Valley Meetup</a>
+  
+    <a target="_blank" class="main" href="http://www.meetup.com/The-Bay-Area-Chef-User-Group/">The Bay Area Chef User Group</a>
+  
+    <a target="_blank" class="main" href="http://www.meetup.com/Bay-Area-Infracoders/">Bay Area Infracoders</a>
+  
+    <a target="_blank" class="main" href="http://www.meetup.com/Docker-Palo-Alto/">Docker Palo Alto</a>
+  
+</div>
+      <section class="paging">
+  
+    <div class="left">
+      <a href="/so-i-dont-forget-again.html">
+        ‹
+      </a>
+    </div>
+  
+  
+    <div class="right">
+      <a href="/basics-operation-on-a-private-docker-registry.html">
+        ›
+      </a>
+    </div>
+  
+</section>
+      <div class="content">
+        <section class='post'>
+          <h1 class="upcase">
+            <div class='date'>08 Sep 2014</div>
+            Django behind an Amazon Load Balancer
+          </h1>
+          <p>We had to configure django behind a AWS load balancer and that would mean that whenever the IP of the load balancer changes we would to change the ALLOWED_HOSTS
+in the settings section. Note: This is for the ELB health check. Some on the web suggest to circumvent the ALLOWED_HOSTS by simple allowing any host,
+which we didn’t want to do. So here is the solution
+I found on <a href="http://dryan.me/articles/elb-django-allowed-hosts/">Daniel Ryan’s</a> site:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Hosts/domain names that are valid for this site; required if DEBUG is False</span>
+<span class="c"># See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts</span>
+<span class="n">ALLOWED_HOSTS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">'WHATEVER YOU NEED'</span>
+<span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">EC2_PRIVATE_IP</span>  <span class="o">=</span>   <span class="bp">None</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">EC2_PRIVATE_IP</span>  <span class="o">=</span>   <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://169.254.169.254/latest/meta-data/local-ipv4'</span><span class="p">,</span> <span class="n">timeout</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+<span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="k">if</span> <span class="n">EC2_PRIVATE_IP</span><span class="p">:</span>
+    <span class="n">ALLOWED_HOSTS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">EC2_PRIVATE_IP</span><span class="p">)</span></code></pre></figure>
+
+
+          <br />
+<p>
+  Til next time,<br/>
+  E.E
+  <span class="muted">at 16:58</span>
+</p>
+
+
+        </section>
+      </div>
+      
+        <div class="block">
+
+  <div class="button">
+    <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  </div>
+
+    <div class="button spaced">
+      <div class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false" data-font="arial" data-action="like"></div>
+    </div>
+
+</div>
+
+      
+
+      
+        <div class="block">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      var disqus_shortname = "Petzi_baer"; 
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+      
+      <div class="block">
+  
+    <a target="_top" class="main" href="/about">About</a>
+  
+    <a target="_blank" class="main" href="https://plus.google.com/u/0/+PeterMooshammer">G+</a>
+  
+    <a target="_blank" class="main" href="https://github.com/pmoosh">GitHub</a>
+  
+    <a target="_blank" class="main" href="https://www.twitter.com/pmoosh">Twitter</a>
+  
+    <a target="_blank" class="main" href="http://www.meetup.com/gdg-silicon-valley/">Google Developer Group Silicon Valley Meetup</a>
+  
+    <a target="_blank" class="main" href="http://www.meetup.com/The-Bay-Area-Chef-User-Group/">The Bay Area Chef User Group</a>
+  
+    <a target="_blank" class="main" href="http://www.meetup.com/Bay-Area-Infracoders/">Bay Area Infracoders</a>
+  
+    <a target="_blank" class="main" href="http://www.meetup.com/Docker-Palo-Alto/">Docker Palo Alto</a>
+  
+</div>
+    </div>
+    <footer>
+  <a href="http://github.com/muan/scribble" class="muted">built with Octopress using Scribble theme</a>
+  <br />
+  <br />
+  <img src="/images/scribble2.png" alt="scribble" /> 
+</footer>
+  </body>
+</html>
