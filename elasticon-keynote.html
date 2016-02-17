@@ -1,7 +1,7 @@
 <html>
   <head>
-    <meta content='Elasticsearch cat API - Bits and Pieces' property='og:title' />
-    <title>Elasticsearch cat API - Bits and Pieces</title>
+    <meta content='Elasticon Keynote - Bits and Pieces' property='og:title' />
+    <title>Elasticon Keynote - Bits and Pieces</title>
     <link href='/images/fav.png' rel='shortcut icon'>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css' />
 <link href='/css/style.css' rel='stylesheet' type='text/css' />
@@ -18,8 +18,8 @@
 <meta content="http://muan.co/images/og.png" property="og:image" />
 <meta content="" property="fb:app_id" />
 
-  <meta content='http://www.mooshammer.us/elasticsearch-cat-api.html' property='og:url' />
-  <meta content="Recently I was involved in an Elasticsearch project. Task was to deploy a complete ELK stack. This included an Elasti..." property='og:description' />
+  <meta content='http://www.mooshammer.us/elasticon-keynote.html' property='og:url' />
+  <meta content="I am in San Francisco today at Pier 48 attending the Elasticon 2016. So far I walked around the vendor area and check..." property='og:description' />
   <meta content="article" property="og:type" />
 
 <!-- - -->
@@ -74,77 +74,26 @@
       <section class="paging">
   
     <div class="left">
-      <a href="/write-hello-world-with-ansible.html">
+      <a href="/elasticsearch-cat-api.html">
         ‹
       </a>
     </div>
   
   
-    <div class="right">
-      <a href="/elasticon-keynote.html">
-        ›
-      </a>
-    </div>
-  
 </section>
       <div class="content">
         <section class='post'>
           <h1 class="upcase">
-            <div class='date'>09 Feb 2016</div>
-            Elasticsearch cat API
+            <div class='date'>17 Feb 2016</div>
+            Elasticon Keynote
           </h1>
-          <p><img class="center" src="/images/catapi.jpg" width="500" height="500" alt="catapi" /></p>
-
-<p>Recently I was involved in an Elasticsearch project. Task was to deploy a complete ELK stack. This included an Elasticsearch Cluster on AWS, one or more  Kibana instances and one or more logstash instances. Adding to that filebeat was used to ship the logs from the clients through logstash to the EL cluster. We based the configuration on a lot of really good community cookbooks that are available.</p>
-
-<p>Elasticsearch queries are basically rest API calls and as such return json formatted data, which usually a good thing. However, if you try to write a small, concise bash script its a bit of a handful to deal with json data. Yes, there is <a href="https://stedolan.github.io/jq/">jq</a> and it is awesome. But then there is the <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html">cat API</a> that Elasticsearch itself provides.</p>
-
-<p>It’s a work in progress and many features that I would have liked to see there are not implemented, especially in the version (1.7.3) we were using. But at least I was able to detect the Elasticsearch master with a simple curl query:<br />
-<code class="highlighter-rouge">
-curl -s -XGET 'http://localhost:9200/_cat/master?h=host'
-</code></p>
-
-<p>Easy enough….</p>
-
-<p>If you need the IP address or Elasticsearch ID it can also be retrieved with:</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">https://localhost:9200/_cat/master?v
-id                     host              ip            node                                            
-UPXABY11KKGUc0XdOYK80x node1.example.com 171.168.5.203 node1.example.com</code></pre></figure>
-
-<p>Here is the complete set that is available with Elasticsearch 1.7.3:</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">curl  https://localhost:9200/_cat/
-<span class="o">=</span>^.^<span class="o">=</span>
-/_cat/allocation
-/_cat/shards
-/_cat/shards/<span class="o">{</span>index<span class="o">}</span>
-/_cat/master
-/_cat/nodes
-/_cat/indices
-/_cat/indices/<span class="o">{</span>index<span class="o">}</span>
-/_cat/segments
-/_cat/segments/<span class="o">{</span>index<span class="o">}</span>
-/_cat/count
-/_cat/count/<span class="o">{</span>index<span class="o">}</span>
-/_cat/recovery
-/_cat/recovery/<span class="o">{</span>index<span class="o">}</span>
-/_cat/health
-/_cat/pending_tasks
-/_cat/aliases
-/_cat/aliases/<span class="o">{</span><span class="nb">alias</span><span class="o">}</span>
-/_cat/thread_pool
-/_cat/plugins
-/_cat/fielddata
-/_cat/fielddata/<span class="o">{</span>fields<span class="o">}</span></code></pre></figure>
-
-<p>As mentioned earlier there are options available in newer versions especially neat is an addition for checking <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-snapshots.html">snapshots</a>. However, what would really be nice is an option to create snapshots.</p>
+          <p>I am in San Francisco today at Pier 48 attending the Elasticon 2016. So far I walked around the vendor area and checked them out. Now I am awaiting the keynote and wonder what to expect considering it is an Opensource project. I am guessing it will be mostly around Elastic’s commercial products</p>
 
           <br />
 <p>
   Til next time,<br/>
   E.E
-  <span class="muted">at 11:44</span>
+  <span class="muted">at 12:53</span>
 </p>
 
 
