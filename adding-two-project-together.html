@@ -1,7 +1,7 @@
 <html>
   <head>
-    <meta content='ElasticON Day 2 - Bits and Pieces' property='og:title' />
-    <title>ElasticON Day 2 - Bits and Pieces</title>
+    <meta content='Adding two OS Projects together - Bits and Pieces' property='og:title' />
+    <title>Adding two OS Projects together - Bits and Pieces</title>
     <link href='/images/fav.png' rel='shortcut icon'>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css' />
 <link href='/css/style.css' rel='stylesheet' type='text/css' />
@@ -18,8 +18,8 @@
 <meta content="http://muan.co/images/og.png" property="og:image" />
 <meta content="" property="fb:app_id" />
 
-  <meta content='http://www.mooshammer.us/elasticon-day-2.html' property='og:url' />
-  <meta content="What’s New with LogstashLogstash 5.0 (or beyond  2.2) will have a lot of goodies that will allow multiple logstash in..." property='og:description' />
+  <meta content='http://www.mooshammer.us/adding-two-project-together.html' property='og:url' />
+  <meta content="Testing ElastAlertFor a project we’ve been working on, we had to find an alerting solution that uses ElasticSearch as..." property='og:description' />
   <meta content="article" property="og:type" />
 
 <!-- - -->
@@ -74,41 +74,28 @@
       <section class="paging">
   
     <div class="left">
-      <a href="/elasticon-keynote.html">
+      <a href="/elasticon-day-2.html">
         ‹
       </a>
     </div>
   
-  
-    <div class="right">
-      <a href="/adding-two-project-together.html">
-        ›
-      </a>
-    </div>
   
 </section>
       <div class="content">
         <section class='post'>
           <h1 class="upcase">
             <div class='date'>18 Feb 2016</div>
-            ElasticON Day 2
+            Adding two OS Projects together
           </h1>
-          <h2 id="whats-new-with-logstash">What’s New with Logstash</h2>
+          <h2 id="testing-elastalert">Testing ElastAlert</h2>
 
-<p>Logstash 5.0 (or beyond  2.2) will have a lot of goodies that will allow multiple logstash instances much easier. Configurations will be stored EL and an <code class="highlighter-rouge">_logstash</code> API will be added. Logstash instance are assigned roles that reflects their configurations. Updates will “live” or via simple reloads, so no restart is necessary.</p>
-
-<p>Monitoring of logstash instances will be part of the Kibana menue.</p>
-
-<h2 id="netsuite---user-story---the-good-the-bad-and-the-ugly">Netsuite - User story - The Good, the Bad and the Ugly</h2>
-
-<p>Scaling (very special use case)
-- because Developers misrepresent (lie) about their requirements.<br />
-- it is not about indexes it is about shards.<br />
-- Organizing ElasticSearch on big HW. New HW is too big for a single ElasticSearch.<br />
-- Use only 1/2 of your Memory ????<br />
-- Best way to scale seems to add more nodes.<br />
-- How to manage shards when you have more than one EL node running on a system.<br />
-- Use Configuration management!! (Shield requires added configuration files).</p>
+<p>For a project we’ve been working on, we had to find an alerting solution that uses ElasticSearch as source. Watcher - the paid enterprise software product sold by Elasticsearch was not an option. So we researched a bit more and found <a href="https://github.com/Yelp/elastalert">ElastAlert</a> brought to you by the guys from Yelp. Now we had figure out, if it would do what we would need and if it would really work for us.<br />
+So how could we setup a test mule? The answer to this question is always Docker thses days and here I remembered a presentation that mentioned something <a href="https://github.com/jpetazzo">Jerome Petazzoni</a> was working on as part of an <a href="https://github.com/jpetazzo/orchestration-workshop/tree/master/elk">Docker orchestration workshop</a>. Using this <a href="https://github.com/jpetazzo/orchestration-workshop/blob/master/elk/docker-compose.yml">Docker compose file</a> you can bring up a full ELK with just one command (after you configured docker/docker-compose and probably virtualbox correctly). The nice part with this configuration is that it will generate some logs right from the get-go, as it installs the <code class="highlighter-rouge">logstash heartbeat plugin</code> that periodically sends log data to ElasticSearch.  <br />
+Initially, I started to install <code class="highlighter-rouge">ElastAlert</code> with all its dependencies  - and there are a lot - in the ElasticSearch Docker container. But then, while searching solutions to all the issues I encountered I found another container that had everything already installed <a href="https://github.com/krizsan/elastalert-docker">here</a>. There is probably a few more out there, but the one I found first…<br />
+So I added this container to Jerome’s docker-compose fil, adjusted it a bit for my purposes and vioala my test mule was ready. Right away I could test - somewhat limited - frequency alerts.<br />
+Next I went back to <a href="http://view.dckr.info:8080/#120">Jerome’s presentation</a> where he demonstrates <code class="highlighter-rouge">gelf</code> docker log driver by generating a <code class="highlighter-rouge">Hello World</code>
+log message. One can easily use that to create <code class="highlighter-rouge">blacklist</code> alerts. <code class="highlighter-rouge">spike</code> alerts can also be simulates, you just have to hit return plenty of times.<br />
+Hope this blog entry inspires others.</p>
 
           <br />
 <p>
